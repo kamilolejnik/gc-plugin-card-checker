@@ -1,0 +1,324 @@
+# Polish translations of the gc-plugin-discounts plugin.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gc-plugin-discounts\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-26 16:50+0200\n"
+"PO-Revision-Date: 2026-09-26 17:00+0200\n"
+"Last-Translator: Green Center\n"
+"Language-Team: Polish\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+msgid "Discounts"
+msgstr "Rabatownik"
+
+msgid "Discount history"
+msgstr "Historia zniżek"
+
+msgid "Percentage"
+msgstr "Procentowa"
+
+msgid "Minutes"
+msgstr "Czasowa"
+
+msgid "Minutes chosen on the spot"
+msgstr "Dynamiczna"
+
+msgid "Access change"
+msgstr "Zmiana dostępu"
+
+msgid "name"
+msgstr "nazwa"
+
+msgid "description"
+msgstr "opis"
+
+msgid "kind"
+msgstr "typ"
+
+msgid "percentage"
+msgstr "procent"
+
+msgid "minutes"
+msgstr "minuty"
+
+msgid "zones"
+msgstr "strefy"
+
+msgid "accesses"
+msgstr "dostępy"
+
+msgid "new access"
+msgstr "nowy dostęp"
+
+msgid "monthly limit"
+msgstr "limit miesięczny"
+
+msgid "active"
+msgstr "aktywny"
+
+msgid "discount"
+msgstr "rabat"
+
+msgid "discounts"
+msgstr "rabaty"
+
+msgid "user"
+msgstr "użytkownik"
+
+msgid "discount user"
+msgstr "użytkownik rabatów"
+
+msgid "discount users"
+msgstr "użytkownicy rabatów"
+
+msgid "pending"
+msgstr "oczekuje"
+
+msgid "applied"
+msgstr "zastosowany"
+
+msgid "card ID"
+msgstr "ID karty"
+
+msgid "card number"
+msgstr "numer karty"
+
+msgid "plates"
+msgstr "tablice"
+
+msgid "status"
+msgstr "status"
+
+msgid "applied at"
+msgstr "zastosowano"
+
+msgid "applied by"
+msgstr "zastosował"
+
+msgid "discount usage"
+msgstr "użycie rabatu"
+
+msgid "discount usages"
+msgstr "użycia rabatów"
+
+#, python-format
+msgid "The monthly limit of this discount has been reached: %(limit)s."
+msgstr "Osiągnięto miesięczny limit zniżek dla tego rabatu: %(limit)s."
+
+#, python-format
+msgid "Your monthly discount limit has been reached: %(limit)s."
+msgstr "Osiągnięto miesięczny limit zniżek %(limit)s."
+
+msgid "No number of minutes chosen."
+msgstr "Brak wybranej liczby minut."
+
+msgid "Invalid number of minutes."
+msgstr "Nieprawidłowa liczba minut."
+
+msgid "Minutes must be between 10 and 1440, in steps of 10."
+msgstr "Minuty muszą być w zakresie 10–1440, co 10 minut."
+
+msgid "Enter the card number or the plate"
+msgstr "Wprowadź numer karty lub tablicę"
+
+msgid "There was a problem fetching the card."
+msgstr "Wystąpił problem podczas pobierania karty."
+
+msgid "Card not found."
+msgstr "Nie znaleziono karty."
+
+msgid "Card is inactive."
+msgstr "Karta nieaktywna."
+
+msgid "Card is blocked."
+msgstr "Karta zablokowana."
+
+msgid "Discount misconfigured (no new access)."
+msgstr "Rabat źle skonfigurowany (brak to_access)."
+
+msgid "Discount misconfigured (no allowed accesses)."
+msgstr "Rabat źle skonfigurowany (brak dozwolonych dostępów)."
+
+msgid "The card does not have the access required for the change."
+msgstr "Karta nie ma wymaganego dostępu do zmiany."
+
+msgid "The card is not eligible for this discount."
+msgstr "Karta nieuprawniona do tego rabatu."
+
+msgid "This discount has already been used for this card."
+msgstr "Ten rabat został już wykorzystany dla tej karty."
+
+msgid "There was a problem on the parking server's side."
+msgstr "Wystąpił problem po stronie serwera parkingowego."
+
+msgid "Used discounts"
+msgstr "Wykorzystane zniżki"
+
+msgid "Discount usage history"
+msgstr "Historia wykorzystania zniżek"
+
+msgid "Export CSV"
+msgstr "Eksport CSV"
+
+msgid "Export Excel"
+msgstr "Eksport Excel"
+
+msgid "Search (card, number, plate, discount, parking)..."
+msgstr "Szukaj (karta, numer, rejestracja, zniżka, parking)..."
+
+msgid "All parkings"
+msgstr "Wszystkie parkingi"
+
+msgid "All discount types"
+msgstr "Wszystkie typy zniżek"
+
+msgid "From"
+msgstr "Od"
+
+msgid "To"
+msgstr "Do"
+
+msgid "Filter"
+msgstr "Filtruj"
+
+msgid "Clear"
+msgstr "Wyczyść"
+
+msgid "Zones:"
+msgstr "Strefy:"
+
+msgid "Accesses:"
+msgstr "Dostępy:"
+
+msgid "No discounts used yet."
+msgstr "Brak wykorzystanych zniżek."
+
+msgid "Pages"
+msgstr "Strony"
+
+#, python-format
+msgid "Page %(page)s of %(pages)s"
+msgstr "Strona %(page)s z %(pages)s"
+
+msgid "Card number"
+msgstr "Numer karty"
+
+msgid "Plate"
+msgstr "Nr rejestracyjny"
+
+msgid "Entry"
+msgstr "Wjazd"
+
+msgid "Exit until"
+msgstr "Wyjazd do"
+
+msgid "Zone"
+msgstr "Strefa"
+
+msgid "Access"
+msgstr "Dostęp"
+
+msgid "Discount"
+msgstr "Rabat"
+
+#, python-format
+msgid "Discount: <strong>%(minutes)s</strong> minutes"
+msgstr "Rabat: <strong>%(minutes)s</strong> minut"
+
+msgid "dynamic"
+msgstr "dynamiczny"
+
+msgid "Choose"
+msgstr "Wybierz"
+
+msgid "No discounts available."
+msgstr "Brak dostępnych rabatów."
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Enter the card number (e.g. 1234567890123456)"
+msgstr "Wpisz numer karty (np. 1234567890123456)"
+
+msgid "Enter the card number or the plate number."
+msgstr "Wpisz numer karty lub numer rejestracyjny."
+
+msgid "Plate number"
+msgstr "Numer rejestracyjny"
+
+msgid "Enter the plate number"
+msgstr "Wpisz numer rejestracyjny"
+
+msgid "Choose the number of minutes:"
+msgstr "Wybierz liczbę minut:"
+
+msgid "Chosen:"
+msgstr "Wybrane:"
+
+msgid "Find card"
+msgstr "Wyszukaj kartę"
+
+msgid "Card information"
+msgstr "Informacje o karcie"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Apply discount"
+msgstr "Zastosuj rabat"
+
+msgid "Discount applied"
+msgstr "Rabat zastosowany"
+
+msgid "Added:"
+msgstr "Dodano:"
+
+msgid "Error"
+msgstr "Błąd"
+
+msgid "Chosen discount:"
+msgstr "Wybrany rabat:"
+
+msgid "Processing..."
+msgstr "Przetwarzanie..."
+
+msgid "Please enter the card number or the plate number."
+msgstr "Proszę podać numer karty lub numer rejestracyjny."
+
+msgid "An error occurred while applying the discount."
+msgstr "Wystąpił błąd podczas stosowania rabatu."
+
+msgid "Your session has expired. Log in again."
+msgstr "Sesja wygasła. Zaloguj się ponownie."
+
+msgid "You do not have access to this discount."
+msgstr "Nie masz dostępu do tego rabatu."
+
+msgid "No station_id/paymentKindId configured for this parking."
+msgstr "Brak konfiguracji station_id/paymentKindId dla tego parkingu."
+
+msgid "Card ID"
+msgstr "ID karty"
+
+msgid "Registration"
+msgstr "Rejestracja"
+
+msgctxt "history"
+msgid "Discount"
+msgstr "Zniżka"
+
+msgid "Parking"
+msgstr "Parking"
+
+msgid "Applied"
+msgstr "Zastosowano"
+
+msgid "User"
+msgstr "Użytkownik"
