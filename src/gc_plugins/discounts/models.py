@@ -34,14 +34,14 @@ class Discount(ParkingScopedModel):
         blank=True,
         related_name="+",
         verbose_name=_("zones"),
-        help_text="Cards currently in one of these zones may get the discount (all kinds but access change).",
+        help_text="The card must be in one of these zones. Required, except for an access change (empty: any zone).",
     )
     accesses = models.ManyToManyField(
         "core.Access",
         blank=True,
         related_name="+",
         verbose_name=_("accesses"),
-        help_text="Cards with one of these accesses may get the access change.",
+        help_text="The card must have one of these accesses (empty: any). Required for an access change.",
     )
     to_access = models.ForeignKey(
         "core.Access",

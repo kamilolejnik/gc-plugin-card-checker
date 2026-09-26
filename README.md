@@ -10,7 +10,8 @@ cards, and managers browse and export the history of applied discounts. The kios
   - *minutes* adds free minutes to the card;
   - *dynamic* adds the minutes the user picks, 10 to 1440 in steps of 10;
   - *access change* gives the card another access, if it has one of the required accesses.
-  The first three apply only to cards in the discount's zones. Each discount may be limited per month.
+  A discount applies only to cards in its zones (required for all kinds but the access change) and,
+  if accesses are chosen, with one of them. Each discount may be limited per month.
 - **Rabatownik** (panel): the user picks a discount of the current parking, enters the card number or
   the plate, sees the card (entry, paid-until time, zone, access) and applies the discount. Payments
   are registered at the user's station with their payment kind (the platform's parking assignment).
@@ -21,7 +22,8 @@ cards, and managers browse and export the history of applied discounts. The kios
 
 ## Configuration (admin, by Green staff)
 
-1. **Discounts**: the parking, kind, zones or accesses and optional monthly limit.
+1. **Discounts**: the parking, kind, zones and accesses (only those of the discount's parking are
+   offered; picking the parking of a new discount reloads the form) and an optional monthly limit.
 2. **Discount users**: for each project user, the discounts they may apply and their monthly limit.
    Green staff need no entry: they may apply every discount of their parkings.
 3. **Groups** with the plugin's permissions:

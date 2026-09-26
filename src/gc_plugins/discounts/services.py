@@ -81,16 +81,23 @@ def find_card(api, card_number="", plate=""):
 
 
 def check_eligible(discount, card):
-    """The card's access (access change) or zone (other kinds) allows the discount, not used on it yet."""
+    """The card's zone and access allow the discount, and the discount was not used on the card yet.
+
+    Chosen zones or accesses restrict the discount; none chosen allows any. Every kind but the access
+    change needs zones, and the access change needs the accesses it changes.
+    """
+    zones = set(discount.zones.values_list("external_id", flat=True))
+    accesses = set(discount.accesses.values_list("external_id", flat=True))
     if discount.kind == Discount.Kind.ACCESS_CHANGE:
         if discount.to_access is None:
             raise DiscountRefused(_("Discount misconfigured (no new access)."))
-        allowed = set(discount.accesses.values_list("external_id", flat=True))
-        if not allowed:
+        if not accesses:
             raise DiscountRefused(_("Discount misconfigured (no allowed accesses)."))
-        if card.access_id not in allowed:
+        if card.access_id not in accesses:
             raise DiscountRefused(_("The card does not have the access required for the change."))
-    elif card.zone_id is None or not discount.zones.filter(external_id=card.zone_id).exists():
+    elif accesses and card.access_id not in accesses:
+        raise DiscountRefused(_("The card is not eligible for this discount."))
+    if (zones or discount.kind != Discount.Kind.ACCESS_CHANGE) and card.zone_id not in zones:
         raise DiscountRefused(_("The card is not eligible for this discount."))
     if DiscountUsage.unscoped.filter(discount=discount, card_id=card.id).exists():
         raise DiscountRefused(_("This discount has already been used for this card."))

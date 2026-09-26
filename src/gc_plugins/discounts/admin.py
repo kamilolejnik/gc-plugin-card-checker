@@ -9,27 +9,24 @@ from .models import Discount, DiscountUsage, DiscountUser
 
 
 class DiscountForm(forms.ModelForm):
+    """Zones and accesses to choose from are those of the discount's parking only."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        parking_id = self.instance.parking_id
+        # Fixed once the discount exists; on a new one, as submitted or as picked (?parking=, see the script).
+        parking_id = str(self.instance.parking_id or self.data.get("parking") or self.initial.get("parking") or "")
         for name in ("zones", "accesses", "to_access"):
             field = self.fields[name]
-            if parking_id:  # the parking is fixed once the discount exists
+            if parking_id.isdigit():
                 field.queryset = field.queryset.filter(parking=parking_id)
-            field.queryset = field.queryset.select_related("parking")
-            field.label_from_instance = lambda item: f"{item.parking} – {item.name} ({item.external_id})"
+            else:
+                field.queryset = field.queryset.none()
+                field.help_text = "Choose the parking first."
+            field.label_from_instance = lambda item: f"{item.name} ({item.external_id})"
 
     def clean(self):
         cleaned_data = super().clean()
-        parking = cleaned_data.get("parking") or getattr(self.instance, "parking", None)
         kind = cleaned_data.get("kind")
-        if parking is None:
-            return cleaned_data
-        for name in ("zones", "accesses"):
-            if cleaned_data.get(name) and cleaned_data[name].exclude(parking=parking).exists():
-                self.add_error(name, f"Choose only {name} of the parking {parking}.")
-        if cleaned_data.get("to_access") and cleaned_data["to_access"].parking_id != parking.pk:
-            self.add_error("to_access", f"Choose an access of the parking {parking}.")
         if kind == Discount.Kind.ACCESS_CHANGE and not cleaned_data.get("accesses"):
             self.add_error("accesses", "Choose the accesses a card must have to get the access change.")
         if kind and kind != Discount.Kind.ACCESS_CHANGE and not cleaned_data.get("zones"):
