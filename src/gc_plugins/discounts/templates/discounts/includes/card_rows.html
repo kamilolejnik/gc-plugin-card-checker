@@ -1,0 +1,29 @@
+{% load i18n %}
+<div class="row mb-2">
+  <div class="col-5 text-muted">{% translate "Card number" %}</div>
+  <div class="col-7 text-right"><strong data-field="{{ prefix }}-card_number"></strong></div>
+</div>
+<div class="row mb-2">
+  <div class="col-5 text-muted">{% translate "Plate" %}</div>
+  <div class="col-7 text-right"><strong data-field="{{ prefix }}-plates"></strong></div>
+</div>
+<hr class="my-3">
+<div class="row mb-2">
+  <div class="col-5 text-muted"><i class="ni ni-bold-right text-success"></i> {% translate "Entry" %}</div>
+  <div class="col-7 text-right"><strong data-field="{{ prefix }}-entry_time"></strong></div>
+</div>
+<div class="row mb-2">
+  <div class="col-5 text-muted"><i class="ni ni-bold-left text-danger"></i> {% translate "Exit until" %}</div>
+  <div class="col-7 text-right"><strong data-field="{{ prefix }}-exit_time"></strong></div>
+</div>
+{% if details %}
+  <hr class="my-3">
+  <div class="row mb-2">
+    <div class="col-5 text-muted">{% translate "Zone" %}</div>
+    <div class="col-7 text-right"><strong data-field="{{ prefix }}-zone"></strong></div>
+  </div>
+  <div class="row">
+    <div class="col-5 text-muted">{% translate "Access" %}</div>
+    <div class="col-7 text-right"><strong data-field="{{ prefix }}-access"></strong></div>
+  </div>
+{% endif %}

@@ -1,0 +1,141 @@
+{% extends "core/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% translate "Discounts" %}{% endblock %}
+{% block heading %}{% translate "Discounts" %}{% endblock %}
+
+{% block content %}
+{% if parking %}
+  <div class="card shadow mb-4 border-0">
+    <div class="card-body d-flex align-items-center">
+      <div class="icon icon-shape bg-gradient-primary text-white rounded-circle mr-3"><i class="ni ni-building"></i></div>
+      <div>
+        <h4 class="mb-0 text-dark font-weight-bold">{{ parking.name }}</h4>
+        {% if parking.address %}<p class="text-muted mb-0">{{ parking.address }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row">
+  {% for discount in discounts %}
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ discount.name }}</h5>
+          <p class="card-text mb-2">
+            {% if discount.kind == "percentage" %}
+              {% translate "Discount" %}: <strong>{{ discount.percentage|floatformat:"-2" }}%</strong>
+            {% elif discount.kind == "minutes" %}
+              {% blocktranslate with minutes=discount.minutes %}Discount: <strong>{{ minutes }}</strong> minutes{% endblocktranslate %}
+            {% elif discount.kind == "access_change" %}
+              {% translate "Access change" %}: <strong>{{ discount.to_access.name }}</strong>
+            {% else %}
+              {% translate "Discount" %}: <strong>{% translate "dynamic" %}</strong>
+            {% endif %}
+          </p>
+          <button type="button" class="btn btn-success btn-sm"
+                  data-discount="{{ discount.pk }}" data-name="{{ discount.name }}" data-kind="{{ discount.kind }}">
+            {% translate "Choose" %}
+          </button>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12 text-center text-muted">{% translate "No discounts available." %}</div>
+  {% endfor %}
+</div>
+
+<div class="modal fade" id="discount-modal" tabindex="-1" role="dialog" aria-labelledby="discount-modal-title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="discount-form" method="post" novalidate
+          data-check-url="{% url 'discounts:check' %}" data-apply-url="{% url 'discounts:apply' %}">
+      {% csrf_token %}
+      <input type="hidden" name="discount">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="discount-modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="card-number">{% translate "Card number" %}</label>
+            <input type="tel" class="form-control" id="card-number" name="card_number" inputmode="numeric" maxlength="19"
+                   autocomplete="off" placeholder="{% translate 'Enter the card number (e.g. 1234567890123456)' %}" aria-describedby="card-help">
+            <small id="card-help" class="form-text text-muted">{% translate "Enter the card number or the plate number." %}</small>
+          </div>
+          <div class="form-group">
+            <label for="plate">{% translate "Plate number" %}</label>
+            <input type="text" class="form-control" id="plate" name="plate" maxlength="20" autocomplete="off"
+                   placeholder="{% translate 'Enter the plate number' %}">
+          </div>
+          <div class="form-group d-none" id="minutes-group">
+            <label for="minutes">{% translate "Choose the number of minutes:" %}</label>
+            <input type="range" class="form-control-range" id="minutes" name="minutes" min="10" max="1440" step="10" value="30">
+            <p class="mt-2">{% translate "Chosen:" %} <strong id="minutes-value">30 min</strong></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">{% translate "Find card" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="preview-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-primary">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="preview-modal-title"><i class="ni ni-credit-card"></i> {% translate "Card information" %}</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="{% translate 'Close' %}"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        {% include "discounts/includes/card_rows.html" with prefix="preview" details=True %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Cancel" %}</button>
+        <button type="button" class="btn btn-success" id="apply-button">{% translate "Apply discount" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="success-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-success">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="success-modal-title"><i class="ni ni-check-bold"></i> {% translate "Discount applied" %}</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="{% translate 'Close' %}"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-3">
+          <h4 class="mb-0" id="success-discount"></h4>
+          <small class="text-muted" id="success-added-row">{% translate "Added:" %} <strong id="success-added"></strong></small>
+        </div>
+        {% include "discounts/includes/card_rows.html" with prefix="success" details=False %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-labelledby="error-modal-title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="error-modal-title"><i class="ni ni-fat-remove"></i> {% translate "Error" %}</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="{% translate 'Close' %}"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body"><p id="error-message" class="mb-0"></p></div>
+      <div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">OK</button></div>
+    </div>
+  </div>
+</div>
+
+{{ texts|json_script:"discount-texts" }}
+{% endblock %}
+
+{% block javascripts %}<script src="{% static 'discounts/discounts.js' %}"></script>{% endblock %}
