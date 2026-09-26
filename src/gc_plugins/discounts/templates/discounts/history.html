@@ -1,0 +1,109 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Discount history" %}{% endblock %}
+{% block heading %}{% translate "Used discounts" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header border-0 d-flex justify-content-between align-items-center">
+    <h3 class="mb-0">{% translate "Discount usage history" %}</h3>
+    <div>
+      <a class="btn btn-sm btn-outline-primary" href="{% querystring export='csv' page=None %}">{% translate "Export CSV" %}</a>
+      <a class="btn btn-sm btn-outline-success" href="{% querystring export='xlsx' page=None %}">{% translate "Export Excel" %}</a>
+    </div>
+  </div>
+  <div class="card-body pt-0">
+    <form method="get" class="form-row align-items-end">
+      <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+      <div class="col-lg-4 mb-2">
+        <input type="search" name="search" class="form-control" value="{{ filters.data.search|default:'' }}"
+               placeholder="{% translate 'Search (card, number, plate, discount, parking)...' %}">
+      </div>
+      <div class="col-lg-2 mb-2">
+        <select name="parking" class="form-control">
+          <option value="">{% translate "All parkings" %}</option>
+          {% for parking in parkings %}
+            <option value="{{ parking.pk }}"{% if filters.data.parking == parking.pk|stringformat:"s" %} selected{% endif %}>{{ parking }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2 mb-2">
+        <select name="kind" class="form-control">
+          <option value="">{% translate "All discount types" %}</option>
+          {% for value, label in kinds %}
+            <option value="{{ value }}"{% if filters.data.kind == value %} selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2 mb-2">
+        <label class="small text-muted mb-0" for="start">{% translate "From" %}</label>
+        <input type="date" id="start" name="start" class="form-control" value="{{ filters.data.start|default:'' }}">
+      </div>
+      <div class="col-lg-2 mb-2">
+        <label class="small text-muted mb-0" for="end">{% translate "To" %}</label>
+        <input type="date" id="end" name="end" class="form-control" value="{{ filters.data.end|default:'' }}">
+      </div>
+      <div class="col-12 mb-2">
+        <button type="submit" class="btn btn-primary btn-sm">{% translate "Filter" %}</button>
+        <a href="{{ request.path }}" class="btn btn-link btn-sm">{% translate "Clear" %}</a>
+      </div>
+    </form>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          {% for column in columns %}
+            <th scope="col">
+              <a href="{% querystring sort=column.sort page=None %}">{{ column.label }}</a>
+              {% if column.active %}{% if column.descending %}&darr;{% else %}&uarr;{% endif %}{% endif %}
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for usage in usages %}
+          <tr>
+            <td>{{ usage.card_id }}</td>
+            <td>{{ usage.card_number|default:"—" }}</td>
+            <td>{{ usage.plates|default:"—" }}</td>
+            <td>
+              {{ usage.discount.name }}
+              <div class="small text-muted">
+                {% if usage.discount.kind == "percentage" %}{{ usage.discount.percentage|floatformat:"-2" }}%{% elif usage.discount.minutes %}{{ usage.discount.minutes }} min{% endif %}
+              </div>
+              {% with zones=usage.discount.zones.all accesses=usage.discount.accesses.all %}
+                {% if zones %}<div class="small text-muted">{% translate "Zones:" %} {{ zones|join:", " }}</div>{% endif %}
+                {% if accesses %}<div class="small text-muted">{% translate "Accesses:" %} {{ accesses|join:", " }}</div>{% endif %}
+              {% endwith %}
+            </td>
+            <td>{{ usage.discount.parking }}</td>
+            <td>{{ usage.applied_at|date:"Y-m-d H:i" }}</td>
+            <td>{{ usage.applied_by_label|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7" class="text-muted">{% translate "No discounts used yet." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if usages.paginator.num_pages > 1 %}
+    <div class="card-footer py-4">
+      <nav aria-label="{% translate 'Pages' %}">
+        <ul class="pagination justify-content-end mb-0">
+          {% if usages.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% querystring page=usages.previous_page_number %}">&lsaquo;</a></li>
+          {% endif %}
+          <li class="page-item disabled">
+            <span class="page-link">{% blocktranslate with page=usages.number pages=usages.paginator.num_pages %}Page {{ page }} of {{ pages }}{% endblocktranslate %}</span>
+          </li>
+          {% if usages.has_next %}
+            <li class="page-item"><a class="page-link" href="{% querystring page=usages.next_page_number %}">&rsaquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

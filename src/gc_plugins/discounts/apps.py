@@ -10,4 +10,5 @@ class DiscountsConfig(AppConfig):
     verbose_name = "Discounts"  # shown only in the admin, which is always in English
     menu = [
         MenuItem(_("Discounts"), "discounts:index", "ni ni-credit-card text-primary", "discounts.apply_discount"),
+        MenuItem(_("Discount history"), "discounts:history", "ni ni-tag text-warning", "discounts.view_discountusage"),
     ]
