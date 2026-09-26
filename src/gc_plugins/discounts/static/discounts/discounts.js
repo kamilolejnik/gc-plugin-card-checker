@@ -18,8 +18,8 @@
       return "-";
     }
     const hours = Math.floor(total / 60);
-    const rest = String(total % 60).padStart(2, "0");
-    return hours ? `${hours} h ${rest} min` : `${rest} min`;
+    const rest = `${String(total % 60).padStart(2, "0")} ${texts.minutes_unit}`;
+    return hours ? `${hours} ${texts.hours_unit} ${rest}` : rest;
   }
 
   function showError(message) {
@@ -92,9 +92,11 @@
     plate.value = plate.value.replace(/\s/g, "").toUpperCase();
     cardNumber.disabled = plate.value !== "";
   });
-  minutes.addEventListener("input", () => {
+  const showMinutes = () => {
     document.getElementById("minutes-value").textContent = formatMinutes(minutes.value);
-  });
+  };
+  minutes.addEventListener("input", showMinutes);
+  showMinutes();
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();

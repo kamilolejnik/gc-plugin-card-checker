@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gc-plugin-discounts\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-26 16:50+0200\n"
+"POT-Creation-Date: 2026-09-26 17:03+0200\n"
 "PO-Revision-Date: 2026-09-26 17:00+0200\n"
 "Last-Translator: Green Center\n"
 "Language-Team: Polish\n"
@@ -12,14 +12,43 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
 msgid "Discounts"
 msgstr "Rabatownik"
 
 msgid "Discount history"
 msgstr "Historia zniżek"
+
+msgid "Card ID"
+msgstr "ID karty"
+
+msgid "Card number"
+msgstr "Numer karty"
+
+msgid "Registration"
+msgstr "Rejestracja"
+
+msgid "Discount name"
+msgstr "Nazwa zniżki"
+
+msgid "Parking"
+msgstr "Parking"
+
+msgid "Zones"
+msgstr "Strefy"
+
+msgid "Accesses"
+msgstr "Dostępy"
+
+msgid "Applied"
+msgstr "Zastosowano"
+
+msgid "User"
+msgstr "Użytkownik"
+
+msgid "Used discounts"
+msgstr "Wykorzystane zniżki"
 
 msgid "Percentage"
 msgstr "Procentowa"
@@ -158,8 +187,8 @@ msgstr "Ten rabat został już wykorzystany dla tej karty."
 msgid "There was a problem on the parking server's side."
 msgstr "Wystąpił problem po stronie serwera parkingowego."
 
-msgid "Used discounts"
-msgstr "Wykorzystane zniżki"
+msgid "parking with a discount"
+msgstr "parking ze zniżką"
 
 msgid "Discount usage history"
 msgstr "Historia wykorzystania zniżek"
@@ -191,6 +220,10 @@ msgstr "Filtruj"
 msgid "Clear"
 msgstr "Wyczyść"
 
+#, python-format
+msgid "%(minutes)s min"
+msgstr "%(minutes)s min"
+
 msgid "Zones:"
 msgstr "Strefy:"
 
@@ -206,9 +239,6 @@ msgstr "Strony"
 #, python-format
 msgid "Page %(page)s of %(pages)s"
 msgstr "Strona %(page)s z %(pages)s"
-
-msgid "Card number"
-msgstr "Numer karty"
 
 msgid "Plate"
 msgstr "Nr rejestracyjny"
@@ -229,8 +259,12 @@ msgid "Discount"
 msgstr "Rabat"
 
 #, python-format
-msgid "Discount: <strong>%(minutes)s</strong> minutes"
-msgstr "Rabat: <strong>%(minutes)s</strong> minut"
+msgid "Discount: <strong>%(minutes)s</strong> minute"
+msgid_plural "Discount: <strong>%(minutes)s</strong> minutes"
+msgstr[0] "Rabat: <strong>%(minutes)s</strong> minuta"
+msgstr[1] "Rabat: <strong>%(minutes)s</strong> minuty"
+msgstr[2] "Rabat: <strong>%(minutes)s</strong> minut"
+msgstr[3] "Rabat: <strong>%(minutes)s</strong> minut"
 
 msgid "dynamic"
 msgstr "dynamiczny"
@@ -280,6 +314,9 @@ msgstr "Rabat zastosowany"
 msgid "Added:"
 msgstr "Dodano:"
 
+msgid "OK"
+msgstr "OK"
+
 msgid "Error"
 msgstr "Błąd"
 
@@ -298,27 +335,18 @@ msgstr "Wystąpił błąd podczas stosowania rabatu."
 msgid "Your session has expired. Log in again."
 msgstr "Sesja wygasła. Zaloguj się ponownie."
 
+msgid "h"
+msgstr "h"
+
+msgid "min"
+msgstr "min"
+
 msgid "You do not have access to this discount."
 msgstr "Nie masz dostępu do tego rabatu."
 
 msgid "No station_id/paymentKindId configured for this parking."
 msgstr "Brak konfiguracji station_id/paymentKindId dla tego parkingu."
 
-msgid "Card ID"
-msgstr "ID karty"
-
-msgid "Registration"
-msgstr "Rejestracja"
-
 msgctxt "history"
 msgid "Discount"
 msgstr "Zniżka"
-
-msgid "Parking"
-msgstr "Parking"
-
-msgid "Applied"
-msgstr "Zastosowano"
-
-msgid "User"
-msgstr "Użytkownik"

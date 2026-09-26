@@ -8,8 +8,9 @@ import logging
 import re
 from decimal import ROUND_HALF_UP, Decimal
 
+from django.conf import settings
 from django.db import IntegrityError, transaction
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
 from core.parking_api import ParkingApiError, ParkingUnreachable
@@ -17,9 +18,6 @@ from core.parking_api import ParkingApiError, ParkingUnreachable
 from .models import Discount, DiscountUsage
 
 logger = logging.getLogger(__name__)
-
-# Printed on the parking system's receipt: data for that system, not a text of this application.
-RECEIPT_DESCRIPTION = "parking ze zniżką"
 
 DYNAMIC_MINUTES = range(10, 1441, 10)
 
@@ -155,7 +153,7 @@ def reserve(discount, card, *, user, user_limit, label):
 def call_parking(api, discount, card, station_id, payment_kind_id, minutes):
     if discount.kind == Discount.Kind.ACCESS_CHANGE:
         return api.set_card_access(card.id, discount.to_access.external_id)
-    payment = {"station_id": station_id, "payment_kind_id": payment_kind_id, "description": RECEIPT_DESCRIPTION}
+    payment = {"station_id": station_id, "payment_kind_id": payment_kind_id, "description": receipt_description()}
     if discount.kind == Discount.Kind.PERCENTAGE:
         # The discount pays its share of the card's fee up to now.
         quote = api.payment_quote(card.id)
@@ -164,3 +162,9 @@ def call_parking(api, discount, card, station_id, payment_kind_id, minutes):
         return api.pay(card, quote=quote, price=price, credit=int(quote.add_credit * share), **payment)
     added = discount.minutes if discount.kind == Discount.Kind.MINUTES else minutes
     return api.pay(card, quote=api.payment_quote(card.id, add_credit=added), **payment)
+
+
+def receipt_description():
+    """The receipt line printed by the parking system: in the deployment's language, not the user's."""
+    with translation.override(settings.LANGUAGE_CODE):
+        return _("parking with a discount")

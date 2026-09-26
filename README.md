@@ -42,8 +42,10 @@ echo "GC_APPS=discounts" >> .env
 python manage.py migrate
 ```
 
-Translations live in `src/gc_plugins/discounts/locale`. Code and message ids are English; the Polish
-texts repeat the Card Checker's wording. The panel is Polish, the admin always English.
+Translations live in `src/gc_plugins/discounts/locale`. Everything outside the admin is translated:
+templates, messages, the script's texts (passed from the view), exports and the receipt line (in the
+deployment's language). Code and message ids are English; the Polish texts repeat the Card Checker's
+wording. The admin is always English.
 
 ```bash
 cd src/gc_plugins/discounts

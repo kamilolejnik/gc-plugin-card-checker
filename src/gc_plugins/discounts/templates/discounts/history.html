@@ -71,7 +71,7 @@
             <td>
               {{ usage.discount.name }}
               <div class="small text-muted">
-                {% if usage.discount.kind == "percentage" %}{{ usage.discount.percentage|floatformat:"-2" }}%{% elif usage.discount.minutes %}{{ usage.discount.minutes }} min{% endif %}
+                {% if usage.discount.kind == "percentage" %}{{ usage.discount.percentage|floatformat:"-2" }}%{% elif usage.discount.minutes %}{% blocktranslate with minutes=usage.discount.minutes %}{{ minutes }} min{% endblocktranslate %}{% endif %}
               </div>
               {% with zones=usage.discount.zones.all accesses=usage.discount.accesses.all %}
                 {% if zones %}<div class="small text-muted">{% translate "Zones:" %} {{ zones|join:", " }}</div>{% endif %}

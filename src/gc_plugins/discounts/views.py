@@ -40,6 +40,8 @@ def index(request):
         "missing": _("Please enter the card number or the plate number."),
         "failed": _("An error occurred while applying the discount."),
         "session": _("Your session has expired. Log in again."),
+        "hours_unit": _("h"),
+        "minutes_unit": _("min"),
     }
     context = {"parking": parking, "discounts": discounts.filter(parking=parking) if parking else [], "texts": texts}
     return render(request, "discounts/index.html", context)

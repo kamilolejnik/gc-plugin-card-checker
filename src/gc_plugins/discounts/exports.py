@@ -1,14 +1,28 @@
-"""CSV and Excel exports of the discount history, with the columns the users' spreadsheets expect."""
+"""CSV and Excel exports of the discount history, in the user's language."""
 
 import csv
 from io import BytesIO
 
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from openpyxl import Workbook
 
-COLUMNS = ["Card ID", "Card Number", "Plate", "Discount Name", "Parking", "Zones", "Accesses", "Applied At", "Applied By"]
 XLSX_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+
+def columns():
+    return [
+        _("Card ID"),
+        _("Card number"),
+        _("Registration"),
+        _("Discount name"),
+        _("Parking"),
+        _("Zones"),
+        _("Accesses"),
+        _("Applied"),
+        _("User"),
+    ]
 
 
 def rows(usages):
@@ -39,17 +53,17 @@ def filename(extension):
 def csv_response(usages):
     response = HttpResponse(content_type="text/csv; charset=utf-8")
     response["Content-Disposition"] = f'attachment; filename="{filename("csv")}"'
-    response.write("﻿")  # lets Excel read the Polish letters
+    response.write("\ufeff")  # byte order mark: lets Excel detect UTF-8
     writer = csv.writer(response)
-    writer.writerow(COLUMNS)
+    writer.writerow(columns())
     writer.writerows(rows(usages))
     return response
 
 
 def xlsx_response(usages):
     workbook = Workbook(write_only=True)
-    sheet = workbook.create_sheet("Discount Usage")
-    sheet.append(COLUMNS)
+    sheet = workbook.create_sheet(_("Used discounts"))
+    sheet.append(columns())
     for row in rows(usages):
         sheet.append(row)
     content = BytesIO()
