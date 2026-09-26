@@ -49,7 +49,7 @@
 <div class="modal fade" id="discount-modal" tabindex="-1" role="dialog" aria-labelledby="discount-modal-title" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <form id="discount-form" method="post" novalidate
-          data-check-url="{% url 'discounts:check' %}" data-apply-url="{% url 'discounts:apply' %}">
+          data-check-url="{% url 'card_checker:check' %}" data-apply-url="{% url 'card_checker:apply' %}">
       {% csrf_token %}
       <input type="hidden" name="discount">
       <div class="modal-content">
@@ -91,7 +91,7 @@
         <button type="button" class="close text-white" data-dismiss="modal" aria-label="{% translate 'Close' %}"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        {% include "discounts/includes/card_rows.html" with prefix="preview" details=True %}
+        {% include "card_checker/includes/card_rows.html" with prefix="preview" details=True %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Cancel" %}</button>
@@ -113,7 +113,7 @@
           <h4 class="mb-0" id="success-discount"></h4>
           <small class="text-muted" id="success-added-row">{% translate "Added:" %} <strong id="success-added"></strong></small>
         </div>
-        {% include "discounts/includes/card_rows.html" with prefix="success" details=False %}
+        {% include "card_checker/includes/card_rows.html" with prefix="success" details=False %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-block" data-dismiss="modal">{% translate "OK" %}</button>
@@ -138,4 +138,4 @@
 {{ texts|json_script:"discount-texts" }}
 {% endblock %}
 
-{% block javascripts %}<script src="{% static 'discounts/discounts.js' %}"></script>{% endblock %}
+{% block javascripts %}<script src="{% static 'card_checker/card_checker.js' %}"></script>{% endblock %}

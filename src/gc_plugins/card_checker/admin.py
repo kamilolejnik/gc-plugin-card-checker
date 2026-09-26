@@ -48,7 +48,7 @@ class DiscountAdmin(ScopedAdmin):
     filter_horizontal = ["zones", "accesses"]
 
     class Media:
-        js = ["discounts/admin/discount_form.js"]
+        js = ["card_checker/admin/discount_form.js"]
 
     def get_readonly_fields(self, request, obj=None):
         # Moving a discount to another parking would detach its history from the parking.

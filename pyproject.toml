@@ -3,20 +3,20 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gc-plugin-discounts"
+name = "gc-plugin-card-checker"
 version = "0.1.0"
-description = "Discounts (Rabatownik) for gc-platform: operators apply parking discounts to cards."
+description = "Card checker (Rabatownik) for gc-platform: users apply parking discounts to cards."
 requires-python = ">=3.14"
 # Django and the platform come from gc-platform itself.
 dependencies = ["openpyxl>=3.1,<4"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["gc_plugins.discounts*"]
+include = ["gc_plugins.card_checker*"]
 namespaces = true
 
 [tool.setuptools.package-data]
-"gc_plugins.discounts" = [
+"gc_plugins.card_checker" = [
     "templates/**/*",
     "static/**/*",
     "locale/*/LC_MESSAGES/*.po",

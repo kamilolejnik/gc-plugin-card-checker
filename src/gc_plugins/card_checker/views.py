@@ -16,8 +16,8 @@ from . import exports, services
 from .models import Discount, DiscountUsage
 from .services import DiscountRefused
 
-APPLY_PERMISSION = "discounts.apply_discount"
-HISTORY_PERMISSION = "discounts.view_discountusage"
+APPLY_PERMISSION = "card_checker.apply_discount"
+HISTORY_PERMISSION = "card_checker.view_discountusage"
 
 
 def allowed_discounts(request):
@@ -44,7 +44,7 @@ def index(request):
         "minutes_unit": _("min"),
     }
     context = {"parking": parking, "discounts": discounts.filter(parking=parking) if parking else [], "texts": texts}
-    return render(request, "discounts/index.html", context)
+    return render(request, "card_checker/index.html", context)
 
 
 @require_POST
@@ -215,4 +215,4 @@ def history(request):
         "kinds": Discount.Kind.choices,
         "columns": columns,
     }
-    return render(request, "discounts/history.html", context)
+    return render(request, "card_checker/history.html", context)

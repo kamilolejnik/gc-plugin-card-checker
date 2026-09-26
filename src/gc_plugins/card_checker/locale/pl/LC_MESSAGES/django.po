@@ -1,8 +1,8 @@
-# Polish translations of the gc-plugin-discounts plugin.
+# Polish translations of the gc-plugin-card-checker plugin.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gc-plugin-discounts\n"
+"Project-Id-Version: gc-plugin-card-checker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-26 17:03+0200\n"
 "PO-Revision-Date: 2026-09-26 17:00+0200\n"

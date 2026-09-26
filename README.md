@@ -1,6 +1,6 @@
-# gc-plugin-discounts
+# gc-plugin-card-checker
 
-Rabatownik for [gc-platform](../green_cloud_services): users of a project apply parking discounts to
+The card checker (Rabatownik) for [gc-platform](../green_cloud_services): users of a project apply parking discounts to
 cards, and managers browse and export the history of applied discounts. The kiosk is a separate plugin.
 
 ## What it does
@@ -27,8 +27,8 @@ cards, and managers browse and export the history of applied discounts. The kios
 2. **Discount users**: for each project user, the discounts they may apply and their monthly limit.
    Green staff need no entry: they may apply every discount of their parkings.
 3. **Groups** with the plugin's permissions:
-   - *Can apply discounts* (`discounts.apply_discount`): the Rabatownik page;
-   - *Can view discount usage* (`discounts.view_discountusage`): the discount history.
+   - *Can apply discounts* (`card_checker.apply_discount`): the Rabatownik page;
+   - *Can view discount usage* (`card_checker.view_discountusage`): the discount history.
 4. Each user also needs an assignment to the parking with a station and payment kind that exist in
    that parking's system.
 
@@ -37,18 +37,17 @@ cards, and managers browse and export the history of applied discounts. The kios
 From the platform directory, with its virtual environment active:
 
 ```bash
-uv pip install -e ../gc-plugin-discounts --config-setting editable_mode=compat
-echo "GC_APPS=discounts" >> .env
-python manage.py migrate
+uv pip install -e ../gc-plugin-card-checker --config-setting editable_mode=compat
+python manage.py migrate      # an installed plugin is enabled; GC_APPS can only narrow the list
 ```
 
-Translations live in `src/gc_plugins/discounts/locale`. Everything outside the admin is translated:
+Translations live in `src/gc_plugins/card_checker/locale`. Everything outside the admin is translated:
 templates, messages, the script's texts (passed from the view), exports and the receipt line (in the
 deployment's language). Code and message ids are English; the Polish texts repeat the Card Checker's
 wording. The admin is always English.
 
 ```bash
-cd src/gc_plugins/discounts
+cd src/gc_plugins/card_checker
 python ../../../../green_cloud_services/manage.py makemessages -l pl --no-location --no-wrap
 python ../../../../green_cloud_services/manage.py compilemessages
 ```
