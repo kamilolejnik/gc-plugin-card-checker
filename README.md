@@ -1,6 +1,6 @@
 # gc-plugin-card-checker
 
-The card checker (Rabatownik) for [gc-platform](../green_cloud_services): users of a project apply parking discounts to
+The card checker (Rabatownik) for [gc-platform](https://github.com/kamilolejnik/gc-platform): users of a project apply parking discounts to
 cards, and managers browse and export the history of applied discounts. The kiosk is a separate plugin.
 
 ## What it does
