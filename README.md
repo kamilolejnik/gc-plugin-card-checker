@@ -38,7 +38,7 @@ From the platform directory, with its virtual environment active:
 
 ```bash
 uv pip install -e ../gc-plugin-card-checker --config-setting editable_mode=compat
-python manage.py migrate      # an installed plugin is enabled; GC_APPS can only narrow the list
+python manage.py migrate      # an installed plugin is enabled; uninstalling it disables it
 ```
 
 Translations live in `src/gc_plugins/card_checker/locale`. Everything outside the admin is translated:
